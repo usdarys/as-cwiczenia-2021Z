@@ -1,0 +1,7 @@
+{
+    "name": "darys/as-cwiczenia-2021z",
+    "type": "project",
+    "require": {
+        "smarty/smarty": "^3.1"
+    }
+}
