@@ -1,7 +1,7 @@
 <?php
 
-require_once dirname(__FILE__) . '/../../config.php';
-require_once _ROOT_PATH . '/utils/utils.php';
+require_once dirname(__FILE__) . '/../../config/config.php';
+require_once _ROOT_PATH . '/vendor/smarty/smarty/libs/Smarty.class.php';
 
 include _ROOT_PATH . '/app/login/auth.php';
 
@@ -17,7 +17,16 @@ if (validateCalculatorParams($amount, $numberOfYears, $interest, $messages)) {
 	$installment = calculateCreditInstallment($amount, $numberOfYears, $interest);
 }
 
-include 'creditCalculatorView.php';
+$smarty = new Smarty;
+
+$smarty->assign('amount', $amount);
+$smarty->assign('numberOfYears', $numberOfYears);
+$smarty->assign('interest', $interest);
+$smarty->assign('installment', $installment);
+$smarty->assign('messages', $messages);
+$smarty->assign('appUrl', _APP_URL);
+
+$smarty->display(dirname(__FILE__) . '/creditCalculatorView.tpl');
 
 
 function getCalculatorParams(&$amount, &$numberOfYears, &$interest) {
