@@ -1,6 +1,6 @@
 <?php
 require_once dirname(__FILE__) . '/../../config/config.php';
-require_once _ROOT_PATH . '/vendor/smarty/smarty/libs/Smarty.class.php';
+require_once $conf->rootPath . '/vendor/smarty/smarty/libs/Smarty.class.php';
 
 $form = array();
 $messages = array();
@@ -12,11 +12,11 @@ if (!validateLoginParams($form, $messages)) {
 
 	$smarty->assign('messages', $messages);
 	$smarty->assign('form', $form);
-	$smarty->assign('appUrl', _APP_URL);
+	$smarty->assign('appUrl', $conf->appUrl);
 
 	$smarty->display(dirname(__FILE__) . '/loginView.tpl');
 } else { 
-	header("Location: " . _APP_URL);
+	header("Location: " . $conf->appUrl);
 }
 
 function getLoginParams(&$form) {
