@@ -1,8 +1,8 @@
-{extends file="../shared/main.tpl"}
+{extends file="../shared/templates/main.tpl"}
 
 {block name=body}
 <nav class="navbar bg-light border-bottom d-flex justify-content-end">
-	<a href="{$appUrl}/app/login/login.php" class="btn btn-link me-3">Wyloguj</a>
+	<a href="{$appUrl}/app/login/login.php" class="btn btn-link me-3 disabled">Wyloguj</a>
 </nav>
 
 <main>
@@ -22,12 +22,10 @@
 					<input id="interest" type="text" name="interest" value="{$interest}" class="form-control"/>
 				</div>
 
-				{if isset($messages)}
-					{if !empty($messages)}
-						{foreach $messages as $msg}
-							<div class="alert alert-danger mb-1">{$msg}</div>
-						{/foreach}
-					{/if}
+				{if !$messages->isEmpty()}
+					{foreach $messages->getErrors() as $msg}
+						<div class="alert alert-danger mb-1">{$msg}</div>
+					{/foreach}
 				{/if}
 
 				<input type="submit" value="Oblicz miesięczną ratę" class="btn btn-primary mt-2"/>

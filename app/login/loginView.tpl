@@ -1,5 +1,5 @@
 
-{extends file="../shared/main.tpl"}
+{extends file="../shared/templates/main.tpl"}
 
 {block name=body}
 <main>
@@ -17,12 +17,10 @@
 				</div>
 			</fieldset>
 
-			{if isset($messages)}
-				{if !empty($messages)}	
-					{foreach $messages as $msg}
-						<div class="alert alert-danger mb-1">{$msg}</div>
-					{/foreach}
-				{/if}
+			{if !$messages->isEmpty()}
+				{foreach $messages->getErrors() as $msg}
+					<div class="alert alert-danger mb-1">{$msg}</div>
+				{/foreach}
 			{/if}
 
 			<input type="submit" value="Zaloguj" class="btn btn-primary btn-lg w-100 mt-2"/>
