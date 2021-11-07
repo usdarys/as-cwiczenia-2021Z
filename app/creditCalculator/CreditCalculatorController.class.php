@@ -83,6 +83,7 @@ class CreditCalculatorController {
 
         $smarty = new Smarty;
 
+        $smarty->assign('conf', $conf);
         $smarty->assign('amount', $this->form->amount);
         $smarty->assign('numberOfYears', $this->form->numberOfYears);
         $smarty->assign('interest', $this->form->interest);

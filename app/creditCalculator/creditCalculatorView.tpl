@@ -7,7 +7,7 @@
 
 <main>
 	<div class="container d-flex justify-content-center credit-calc-form flex-column">
-			<form action="{$appUrl}/app/creditCalculator/creditCalculator.php" method="post" class="mt-5 w-100">
+			<form action="{$conf->actionRoot}creditCalculator" method="post" class="mt-5 w-100">
 				<legend class="text-center mb-3">Kalkulator kredytowy</legend>
 				<div class="mb-3">
 					<label for="amount" class="form-label">Kwota: </label>
@@ -37,4 +37,3 @@
 	</div>
 </main>
 {/block}
-

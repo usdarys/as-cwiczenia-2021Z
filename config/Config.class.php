@@ -6,4 +6,6 @@ class Config {
     public $appRoot;
     public $appUrl;
     public $rootPath;
+    public $actionRoot;
+    public $actionUrl;
 }
