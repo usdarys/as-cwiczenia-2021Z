@@ -1,5 +1,5 @@
 
-{extends file="../shared/templates/main.tpl"}
+{extends file="templates/main.tpl"}
 
 {block name=body}
 <main>

@@ -1,8 +1,8 @@
-{extends file="../shared/templates/main.tpl"}
+{extends file="templates/main.tpl"}
 
 {block name=body}
 <nav class="navbar bg-light border-bottom d-flex justify-content-end">
-	<a href="{$appUrl}/app/login/login.php" class="btn btn-link me-3 disabled">Wyloguj</a>
+	<a href="" class="btn btn-link me-3 disabled">Wyloguj</a>
 </nav>
 
 <main>
@@ -11,15 +11,15 @@
 				<legend class="text-center mb-3">Kalkulator kredytowy</legend>
 				<div class="mb-3">
 					<label for="amount" class="form-label">Kwota: </label>
-					<input id="amount" type="text" name="amount" value="{$amount}" class="form-control"/>
+					<input id="amount" type="text" name="amount" value="{$form->amount}" class="form-control"/>
 				</div>
 				<div class="mb-3">
 					<label for="numberOfYears" class="form-label">Liczba lat: </label>
-					<input id="numberOfYears" type="text" name="numberOfYears" value="{$numberOfYears}" class="form-control"/>
+					<input id="numberOfYears" type="text" name="numberOfYears" value="{$form->numberOfYears}" class="form-control"/>
 				</div>
 				<div class="mb-3">
 					<label for="interest" class="form-label">Oprocentowanie: </label>
-					<input id="interest" type="text" name="interest" value="{$interest}" class="form-control"/>
+					<input id="interest" type="text" name="interest" value="{$form->interest}" class="form-control"/>
 				</div>
 
 				{if !$messages->isEmpty()}
