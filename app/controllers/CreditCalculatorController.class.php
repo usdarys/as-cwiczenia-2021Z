@@ -1,18 +1,16 @@
 <?php
 
-require_once $conf->rootPath . '/vendor/smarty/smarty/libs/Smarty.class.php';
-require_once $conf->rootPath . '/app/creditCalculator/CreditCalculatorForm.class.php';
-require_once $conf->rootPath . '/app/shared/Messages.class.php';
+namespace app\controllers;
+
+use app\forms\CreditCalculatorForm;
 
 class CreditCalculatorController {
 
     private $form;
     private $installment;
-    private $messages;
 
     public function __construct() {
         $this->form = new CreditCalculatorForm();
-        $this->messages = new Messages();
         $this->installment = null;
     }
 
@@ -30,18 +28,18 @@ class CreditCalculatorController {
         }
 
         if (!is_numeric($this->form->amount)) {
-            $this->messages->addError('Niepoprawny format kwoty');
+            getMessages()->addError('Niepoprawny format kwoty');
         }
         
         if (!is_numeric($this->form->numberOfYears)) {
-            $this->messages->addError('Niepoprawny format liczby lat');
+            getMessages()->addError('Niepoprawny format liczby lat');
         }
         
         if (!is_numeric($this->form->interest)) {
-            $this->messages->addError('Niepoprawny format oprocentowania');
+            getMessages()->addError('Niepoprawny format oprocentowania');
         }
 
-        if (!$this->messages->isEmpty()) {
+        if (getMessages()->isError()) {
             return false;
         }
         
@@ -50,18 +48,18 @@ class CreditCalculatorController {
         $this->form->interest = floatval($this->form->interest);
         
         if ($this->form->amount <= 0) {
-            $this->messages->addError('Kwota musi być większa od zera');
+            getMessages()->addError('Kwota musi być większa od zera');
         }
     
         if ($this->form->numberOfYears <= 0) {
-            $this->messages->addError('Liczba lat musi byc min. 1');
+            getMessages()->addError('Liczba lat musi byc min. 1');
         }
     
         if ($this->form->interest < 0) {
-            $this->messages->addError('Oprocentowanie nie moze być mniejsze niż 0');
+            getMessages()->addError('Oprocentowanie nie moze być mniejsze niż 0');
         }
     
-        if (!$this->messages->isEmpty()) {
+        if (getMessages()->isError()) {
             return false;
         }
     
@@ -79,18 +77,9 @@ class CreditCalculatorController {
     }
 
     private function generateView() {
-        global $conf;
-
-        $smarty = new Smarty;
-
-        $smarty->assign('amount', $this->form->amount);
-        $smarty->assign('numberOfYears', $this->form->numberOfYears);
-        $smarty->assign('interest', $this->form->interest);
-        $smarty->assign('installment', $this->installment);
-        $smarty->assign('messages', $this->messages);
-        $smarty->assign('appUrl', $conf->appUrl);
-        
-        $smarty->display($conf->rootPath . '/app/creditCalculator/creditCalculatorView.tpl');
+        getSmarty()->assign('form', $this->form);
+        getSmarty()->assign('installment', $this->installment);
+        getSmarty()->display('creditCalculatorView.tpl');
     }
 
 }
