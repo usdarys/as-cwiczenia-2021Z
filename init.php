@@ -1,14 +1,25 @@
 <?php
+
+// ---------------------------
+// Autoloader paczek composera
+// ---------------------------
+require_once dirname(__FILE__) . '/vendor/autoload.php';
+
+// ------------------------
+// Załadowanie konfiguracji
+// ------------------------
 require_once dirname(__FILE__) . '/core/Config.class.php';
 $conf = new core\Config();
-include dirname(__FILE__) . '/config/config.php'; //ustaw konfigurację
+include dirname(__FILE__) . '/config/config.php';
 
 function &getConf() { 
     global $conf; 
     return $conf; 
 }
 
-//załaduj definicję klasy Messages i stwórz obiekt
+// --------------------
+// Załadowanie Messages
+// --------------------
 require_once getConf()->rootPath . '/core/Messages.class.php';
 $msgs = new core\Messages();
 
@@ -17,14 +28,15 @@ function &getMessages() {
     return $msgs; 
 }
 
-//przygotuj Smarty, twórz tylko raz - wtedy kiedy potrzeba
+// ------------------
+// Załadowanie Smarty
+// ------------------
 $smarty = null;	
 function &getSmarty() {
     global $smarty;
     
 	if (!isset($smarty)) {
 		//stwórz Smarty i przypisz konfigurację i messages
-		include_once getConf()->rootPath . '/vendor/smarty/smarty/libs/Smarty.class.php';
 		$smarty = new Smarty();	
 		//przypisz konfigurację i messages
 		$smarty->assign('conf', getConf());
@@ -38,14 +50,38 @@ function &getSmarty() {
 	return $smarty;
 }
 
+// -----------------
+// Załadowanie Utils
+// -----------------
 require_once getConf()->rootPath . '/core/utils.php';
 
- //załaduj i stwórz loader klas
- require_once getConf()->rootPath . '/core/ClassLoader.class.php';
- $cloader = new core\ClassLoader();
- function &getLoader() {
-	 global $cloader;
-	 return $cloader;
- }
+// -------------------------
+// Załadowanie Class Loadera
+// -------------------------
+require_once getConf()->rootPath . '/core/ClassLoader.class.php';
+$cloader = new core\ClassLoader();
+function &getLoader() {
+	global $cloader;
+	return $cloader;
+}
 
-$action = getRequestParameter('action');
+// -------------------
+// Załadowanie Routera
+// -------------------
+require_once getConf()->rootPath . '/core/Router.class.php';
+$router = new core\Router();
+function &getRouter(): core\Router {
+    global $router; return $router;
+}
+
+// ---------------------------
+// Uruchom lub kontynuuj sesję
+// ---------------------------
+session_start(); 
+
+// ------------
+// Wczytaj role
+// ------------
+$conf->roles = isset($_SESSION['_roles']) ? unserialize($_SESSION['_roles']) : array(); 
+
+$router->setAction(getFromRequest('action'));

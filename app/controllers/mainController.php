@@ -1,16 +1,14 @@
 <?php
 
-use app\controllers\CreditCalculatorController;
+
 
 require_once dirname(__FILE__) . '/../../init.php';
 
-switch($action) {
-    default: 
-        $controller = new CreditCalculatorController();
-        $controller->process();
-    break;
-    case 'creditCalculator':
-        $controller = new CreditCalculatorController();
-        $controller->process();      
-    break;
-}
+getRouter()->setDefaultRoute('creditCalculator');
+getRouter()->setUnauthorizedRoute('login');
+
+getRouter()->addRoute('creditCalculator', 'CreditCalculatorController', ['user', 'admin']);
+getRouter()->addRoute('login', 'LoginController');
+getRouter()->addRoute('logout', 'LoginController', ['user', 'admin']);
+
+getRouter()->go();

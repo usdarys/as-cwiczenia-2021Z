@@ -14,7 +14,7 @@ class CreditCalculatorController {
         $this->installment = null;
     }
 
-    public function process() {
+    public function creditCalculatorAction() {
         if ($this->validateForm()) {
             $this->calculateCreditInstallment();
         }

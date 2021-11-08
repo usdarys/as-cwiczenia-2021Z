@@ -9,8 +9,8 @@ class CreditCalculatorForm {
     public $interest;
 
     public function __construct() {
-        $this->amount = getRequestParameter('amount');
-        $this->numberOfYears = getRequestParameter('numberOfYears');
-        $this->interest = getRequestParameter('interest');
+        $this->amount = getFromRequest('amount');
+        $this->numberOfYears = getFromRequest('numberOfYears');
+        $this->interest = getFromRequest('interest');
     }
 }
