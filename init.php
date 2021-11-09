@@ -55,6 +55,28 @@ function &getSmarty() {
 // -----------------
 require_once getConf()->rootPath . '/core/utils.php';
 
+// -------------------
+// Przygotowanie Medoo
+// -------------------
+$db = null;
+function &getDB() {
+    global $conf, $db;
+    if (!isset($db)) {
+        $db = new Medoo\Medoo([
+            'database_type' => &$conf->db_type,
+            'server' => &$conf->db_server,
+            'database_name' => &$conf->db_name,
+            'username' => &$conf->db_user,
+            'password' => &$conf->db_pass,
+            'charset' => &$conf->db_charset,
+            'port' => &$conf->db_port,
+            'prefix' => &$conf->db_prefix,
+            'option' => &$conf->db_option
+        ]);
+    }
+    return $db;
+}
+
 // -------------------------
 // Załadowanie Class Loadera
 // -------------------------

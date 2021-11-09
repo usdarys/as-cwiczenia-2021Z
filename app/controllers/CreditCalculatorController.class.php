@@ -73,7 +73,17 @@ class CreditCalculatorController {
             $this->installment = ($this->form->amount / ($this->form->numberOfYears * 12)) + ($this->form->interest * $this->form->amount / 100);
         }
     
-        return $this->installment;
+        try {
+            getDB()->insert('credit_calc_history', [
+                'date' => date('Y-m-d H:i:s'),
+                'amount' => $this->form->amount,
+                'number_of_years' => $this->form->numberOfYears,
+                'interest' => $this->form->interest,
+                'installment' => $this->installment
+            ]);
+        } catch(\PDOException $e) {
+            getMessages()->addError('Database error: ' . $e->getMessage());
+        }
     }
 
     private function generateView() {
