@@ -1,9 +1,6 @@
-{extends file="templates/main.tpl"}
+{extends file="navbarView.tpl"}
 
-{block name=body}
-<nav class="navbar bg-light border-bottom d-flex justify-content-end">
-	<a href="{$conf->actionUrl}logout" class="btn btn-link me-3">Wyloguj</a>
-</nav>
+{block name=main}
 
 <main>
 	<div class="container d-flex justify-content-center credit-calc-form flex-column">
